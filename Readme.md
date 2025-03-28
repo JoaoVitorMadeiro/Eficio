@@ -1,101 +1,96 @@
-# **Eficio – Sistema SaaS para Gestão de Pequenas Empresas**
+# Eficio – Sistema SaaS para Gestão de Pequenas Empresas
 
-## 📌 **Descrição**
+## 📌 Descrição
+
 **Eficio** é um sistema **SaaS** baseado em **microservices**, projetado para a gestão de **vendas, estoques e finanças**. Ele inclui suporte para **emissão de notas fiscais**, integração com **APIs bancárias** e arquitetura escalável com **Docker e Kubernetes**.
 
 ---
 
-## 🏗 **Arquitetura do Sistema**
+## 🏗 Arquitetura do Sistema
 
-🔹 **Auth-Service** → Autenticação e autorização (**JWT, OAuth2**)  
-🔹 **User-Service** → Gestão de usuários e perfis  
-🔹 **Sales-Service** → Processamento de vendas e pedidos  
-🔹 **Stock-Service** → Controle de estoque  
-🔹 **Finance-Service** → Gestão financeira e conciliação bancária  
-🔹 **Invoice-Service** → Emissão de notas fiscais  
-🔹 **API Gateway** → Gerenciamento centralizado de rotas
+- **Auth-Service** → Autenticação e autorização (**JWT, OAuth2**)
+- **User-Service** → Gestão de usuários e perfis
+- **Sales-Service** → Processamento de vendas e pedidos
+- **Stock-Service** → Controle de estoque
+- **Finance-Service** → Gestão financeira e conciliação bancária
+- **Invoice-Service** → Emissão de notas fiscais
+- **API Gateway** → Gerenciamento centralizado de rotas
 
-🔄 **Comunicação**:  
-✅ **Síncrona (REST + OpenFeign)** para operações rápidas.  
-✅ **Assíncrona (Kafka/RabbitMQ)** para eventos como atualização de estoque após venda.
+### 🔄 Comunicação
+
+- **Síncrona (REST + OpenFeign)** para operações rápidas
+- **Assíncrona (Kafka/RabbitMQ)** para eventos como atualização de estoque após venda
 
 ---
 
-## 🚀 **Tecnologias Utilizadas**
+## 🚀 Tecnologias Utilizadas
 
 - **Java 17 + Spring Boot**
-- **Spring Cloud (Eureka, OpenFeign, Gateway)**
-- **Kafka / RabbitMQ**
-- **PostgreSQL / MySQL**
-- **Docker + Kubernetes**
-- **Swagger / OpenAPI**
-- **OAuth2 + JWT**
-- **Grafana + Prometheus (Monitoramento)**
+- **Maven**
+- **PostgreSQL**
+- **Redis**
+- **Docker, Kubernetes**
+- **Kafka/RabbitMQ**
+- **Keycloak/OAuth2**
 
 ---
 
-## 🛠 **Instalação e Configuração**
+## 📋 Requisitos do Sistema
 
-### **1️⃣ Clonando o Repositório**
-```bash
-git clone https://github.com/seu-usuario/eficio.git
-cd eficio
+### Requisitos Funcionais
+
+1. O sistema deve permitir o cadastro e autenticação de usuários.
+2. Deve ser possível gerenciar permissões de acesso.
+3. O sistema deve processar vendas e atualizar o estoque automaticamente.
+4. Deve permitir a emissão de notas fiscais.
+5. O módulo financeiro deve permitir conciliação bancária e controle de fluxo de caixa.
+6. O sistema deve permitir integração com APIs externas para pagamento e emissão de NF-e.
+
+### Requisitos Não Funcionais
+
+1. O sistema deve ser escalável e suportar alta carga de usuários simultâneos.
+2. Deve ser implantado em containers utilizando Docker e Kubernetes.
+3. Deve garantir segurança na autenticação com OAuth2 e JWT.
+4. A comunicação entre microserviços deve ser otimizada com Kafka/RabbitMQ.
+5. O banco de dados deve garantir consistência e disponibilidade.
+
+---
+
+## 📂 Estrutura do Repositório
+
 ```
-
-### **2️⃣ Configuração do Banco de Dados**
-Crie um banco **PostgreSQL** ou **MySQL** e configure no `application.yml` de cada serviço.
-
-```yaml
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/eficio
-    username: seu_usuario
-    password: sua_senha
+Eficio/
+│── Auth/           # Serviço de autenticação
+│── User/           # Gestão de usuários
+│── Sales/          # Processamento de vendas
+│── Stock/          # Controle de estoque
+│── Finance/        # Gestão financeira
+│── Invoice/        # Emissão de notas fiscais
+│── API Gateway/    # Gerenciamento de rotas
+│── pom.xml         # Arquivo de configuração do Maven
+│── Dockerfile      # Arquivo de configuração para Docker
+└── README.md       # Documentação principal
 ```
 
 ---
 
-## 🐳 **Rodando com Docker**
+## 🚀 Deploy e Execução
 
-### **Docker Compose (Ambiente de Desenvolvimento)**
+### Pré-requisitos
+- Docker e Docker Compose
+- Java 17
+- Maven
+
+### Executando o sistema
 ```bash
+git clone <repositorio>
+cd Eficio
 docker-compose up -d
 ```
-O **docker-compose.yml** já inclui todos os microservices e banco de dados.
 
----
+### Acessando os serviços
+- API Gateway: `http://localhost:8080`
+- Auth-Service: `http://localhost:8081`
+- User-Service: `http://localhost:8082`
 
-## ☸ **Deploy com Kubernetes**
 
-### **1️⃣ Criar os Deployments**
-```bash
-kubectl apply -f k8s/
-```
-O diretório `k8s/` contém os arquivos para deploy no **Kubernetes**, incluindo **ConfigMaps, Secrets e Services**.
-
-### **2️⃣ Monitorar os Pods**
-```bash
-kubectl get pods
-```
-
----
-
-## 📖 **Documentação da API**
-
-🔹 **Swagger UI** → `http://localhost:8080/swagger-ui.html`  
-🔹 **OpenAPI JSON** → `http://localhost:8080/v3/api-docs`
-
----
-
-## 🤝 **Como Contribuir?**
-
-1. **Fork** o repositório
-2. Crie uma **branch** (`git checkout -b feature/minha-feature`)
-3. Faça commit das mudanças (`git commit -m "Adicionei nova feature"`)
-4. Faça **push** para a branch (`git push origin feature/minha-feature`)
-5. Abra um **Pull Request**
-
----
-
-## 📝 **Licença**
-Este projeto está sob a licença **MIT**.
